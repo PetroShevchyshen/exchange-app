@@ -12,10 +12,9 @@ export const App: FC = () => {
   }, [exchangeRate]);
 
   return (
-    <div className="w-dvw h-dvh bg-amber-800">
+    <section className="w-dvw h-dvh bg-amber-800">
       <Header date={uahResponse} />
-      Main Paige
       <ExchangeForm />
-    </div>
+    </section>
   );
 };

@@ -3,3 +3,5 @@ export const moneyOptions = [
   { value: "eur", label: "EUR" },
   { value: "uah", label: "UAH" },
 ];
+
+export type MoneyValue = "usd" | "eur" | "uah";

@@ -1,11 +1,10 @@
-import { InputNumber, Select } from "antd";
-import { moneyOptions } from "../../const/moneyOptions";
+import { MoneyInput } from "../MoneyInput";
 
 function ExchangeForm() {
   return (
-    <div className="flex flex-row gap-3">
-      <InputNumber controls={false} defaultValue={0} />
-      <Select defaultValue="uah" options={moneyOptions} />
+    <div className="flex flex-col gap-5">
+      <MoneyInput defaultValue="uah" />
+      <MoneyInput defaultValue="usd" />
     </div>
   );
 }
