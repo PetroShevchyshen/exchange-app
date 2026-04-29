@@ -19,7 +19,7 @@ type CurrencyMap = {
   usd: Usd;
 };
 
-type Root<T extends keyof CurrencyMap> = {
+export type Root<T extends keyof CurrencyMap> = {
   date: string;
 } & {
   [K in T]: CurrencyMap[K];
