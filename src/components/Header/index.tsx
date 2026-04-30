@@ -12,8 +12,8 @@ export const Header: FC<HeaderProps> = ({ date }) => {
       <div>{date?.date}</div>
       <div className="flex gap-4">
         <p>Exchange Rates</p>
-        <div>{uahConvert(date?.uah.usd)}</div>
-        <div>{uahConvert(date?.uah.eur)}</div>
+        <div>{"$ " + uahConvert(date?.uah.usd)}</div>
+        <div>{"€ " + uahConvert(date?.uah.eur)}</div>
       </div>
     </div>
   );

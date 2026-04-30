@@ -1,6 +1,6 @@
 import { useEffect, type FC } from "react";
 import { Header } from "./components/Header";
-import ExchangeForm from "./components/ExchangeFrom";
+import { ExchangeForm } from "./components/ExchangeFrom";
 import { useExchangeStore } from "./store/exchange-store";
 
 export const App: FC = () => {
