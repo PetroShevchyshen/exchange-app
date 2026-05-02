@@ -8,7 +8,7 @@ interface HeaderProps {
 
 export const Header: FC<HeaderProps> = ({ date }) => {
   return (
-    <div className="h-16 flex justify-around bg-amber-500">
+    <div className="h-16 flex justify-around text-amber-100">
       <div>{date?.date}</div>
       <div className="flex gap-4">
         <p>Exchange Rates</p>

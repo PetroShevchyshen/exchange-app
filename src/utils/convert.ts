@@ -6,6 +6,7 @@ export const uahConvert = (rate: number | undefined) => {
   const result = 1 / rate;
   return roundToTwoDecimals(result);
 };
+
 export const convert = (
   amount: number,
   from: MoneyValue,

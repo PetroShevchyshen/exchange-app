@@ -18,12 +18,15 @@ export const MoneyInput: FC<MoneyInputProps> = ({
   return (
     <div className="flex flex-row gap-3">
       <InputNumber
+        className="flex-1"
+        style={{ width: "100%" }}
         controls={false}
         defaultValue={0}
         value={value}
         onChange={(val) => onChange(val!)}
       />
       <Select
+        className="w-24"
         defaultValue={defaultValue}
         options={moneyOptions}
         onChange={(value) => onAmountTypeChange(value)}

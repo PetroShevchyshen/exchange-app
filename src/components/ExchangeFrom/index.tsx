@@ -8,48 +8,52 @@ import type { MoneyValue } from "../../const/moneyOptions";
 export const ExchangeForm: FC = () => {
   const uahData = useExchangeStore((state) => state.item);
 
-  const [fromAmount, setFromAmount] = useState(0);
-  const [toAmount, setToAmount] = useState(0);
-
   const [fromAmountType, setFromAmountType] = useState<MoneyValue>("uah");
   const [toAmountType, setToAmountType] = useState<MoneyValue>("usd");
+
+  const [amount, setAmount] = useState(0);
+  const [activeField, setActiveField] = useState<"from" | "to">("from");
 
   const rates: Record<MoneyValue, number> = {
     uah: 1,
     ...uahData.uah,
   };
 
+  const fromValue =
+    activeField === "from"
+      ? amount
+      : roundToTwoDecimals(
+          convert(amount, toAmountType, fromAmountType, rates),
+        );
+
+  const toValue =
+    activeField === "to"
+      ? amount
+      : roundToTwoDecimals(
+          convert(amount, fromAmountType, toAmountType, rates),
+        );
+
   const changeFromAmountHandler = (value: number) => {
-    setFromAmount(value);
-
-    if (!uahData) return;
-
-    const convertedValue = convert(value, fromAmountType, toAmountType, rates);
-
-    setToAmount(roundToTwoDecimals(convertedValue));
+    setActiveField("from");
+    setAmount(value);
   };
 
   const changeToAmountHandler = (value: number) => {
-    setToAmount(value);
-
-    if (!uahData) return;
-
-    const convertedValue = convert(value, toAmountType, fromAmountType, rates);
-
-    setFromAmount(roundToTwoDecimals(convertedValue));
+    setActiveField("to");
+    setAmount(value);
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col w-64 gap-5">
       <MoneyInput
         defaultValue={fromAmountType}
-        value={fromAmount}
+        value={fromValue}
         onChange={changeFromAmountHandler}
         onAmountTypeChange={setFromAmountType}
       />
       <MoneyInput
         defaultValue={toAmountType}
-        value={toAmount}
+        value={toValue}
         onChange={changeToAmountHandler}
         onAmountTypeChange={setToAmountType}
       />

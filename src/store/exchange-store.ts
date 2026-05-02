@@ -4,6 +4,7 @@ import axios from "axios";
 
 interface ExchangeState {
   item: Root<"uah">;
+  error: string | null;
   exchangeRate: () => Promise<void>;
 }
 
@@ -12,10 +13,16 @@ export const useExchangeStore = create<ExchangeState>()((set) => ({
     date: "",
     uah: { eur: 0, usd: 0 },
   },
+  error: null,
   exchangeRate: async () => {
-    const resp = await axios.get<UahResponse>(
-      "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@2025-04-29/v1/currencies/uah.json",
-    );
-    set({ item: resp.data });
+    try {
+      const resp = await axios.get<UahResponse>(
+        "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/uah.json",
+      );
+      set({ item: resp.data, error: null });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      set({ item: undefined, error: "Failed to fetch exchange rates" });
+    }
   },
 }));
