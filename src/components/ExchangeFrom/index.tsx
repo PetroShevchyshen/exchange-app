@@ -1,11 +1,13 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import { MoneyInput } from "../MoneyInput";
 import { useExchangeStore } from "../../store/exchange-store";
 import { convert } from "../../utils/convert";
 import { roundToTwoDecimals } from "../../utils/round";
 import type { MoneyValue } from "../../const/moneyOptions";
+import { Button } from "antd";
+import type { ExchangeFormProps } from "../../interface/exchangeForm";
 
-export const ExchangeForm: FC = () => {
+export const ExchangeForm: FC<ExchangeFormProps> = ({ openModal }) => {
   const uahData = useExchangeStore((state) => state.item);
   const setAmountValue = useExchangeStore((state) => state.setAmount);
   const setAmountType = useExchangeStore((state) => state.setAmountType);
@@ -35,9 +37,6 @@ export const ExchangeForm: FC = () => {
           convert(amount, fromAmountType, toAmountType, rates),
         );
 
-  setAmountValue(toValue);
-  setAmountType(toAmountType);
-
   const changeFromAmountHandler = (value: number) => {
     setActiveField("from");
     setAmount(value);
@@ -48,22 +47,39 @@ export const ExchangeForm: FC = () => {
     setAmount(value);
   };
 
+  useEffect(() => {
+    setAmountValue(toValue);
+    setAmountType(toAmountType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toAmountType, toValue]);
+
   return (
-    <div className="flex flex-col w-64 gap-3">
-      <MoneyInput
-        defaultValue={fromAmountType}
-        value={fromValue}
-        onChange={changeFromAmountHandler}
-        onAmountTypeChange={setFromAmountType}
-        lable="You change"
-      />
-      <MoneyInput
-        defaultValue={toAmountType}
-        value={toValue}
-        onChange={changeToAmountHandler}
-        onAmountTypeChange={setToAmountType}
-        lable="You receive"
-      />
+    <div className="flex flex-col items-center gap-8 border-2 border-amber-100 rounded-lg p-10">
+      <p className="text-amber-100">Exchange Form</p>
+      <div className="flex flex-col w-64 gap-3">
+        <MoneyInput
+          defaultValue={fromAmountType}
+          value={fromValue}
+          onChange={changeFromAmountHandler}
+          onAmountTypeChange={setFromAmountType}
+          lable="You change"
+        />
+        <MoneyInput
+          defaultValue={toAmountType}
+          value={toValue}
+          onChange={changeToAmountHandler}
+          onAmountTypeChange={setToAmountType}
+          lable="You receive"
+        />
+      </div>
+      <Button
+        color="cyan"
+        variant="solid"
+        onClick={openModal}
+        disabled={!amount}
+      >
+        Exchange
+      </Button>
     </div>
   );
 };

@@ -15,6 +15,7 @@ export const ModalView: FC<ModalViewProps> = ({
       open={isOpen}
       onCancel={onClose}
       onOk={onClose}
+      okText="Confirm"
     >
       <p>
         The amount {amount} {amountType?.toLocaleUpperCase()} will become to
