@@ -4,8 +4,12 @@ import axios from "axios";
 
 interface ExchangeState {
   item: Root<"uah">;
+  amount: number;
+  amountType: string | null;
   error: string | null;
   exchangeRate: () => Promise<void>;
+  setAmount: (amount: number) => void;
+  setAmountType: (amountType: string) => void;
 }
 
 export const useExchangeStore = create<ExchangeState>()((set) => ({
@@ -13,7 +17,9 @@ export const useExchangeStore = create<ExchangeState>()((set) => ({
     date: "",
     uah: { eur: 0, usd: 0 },
   },
+  amount: 0,
   error: null,
+  amountType: null,
   exchangeRate: async () => {
     try {
       const resp = await axios.get<UahResponse>(
@@ -25,4 +31,6 @@ export const useExchangeStore = create<ExchangeState>()((set) => ({
       set({ item: undefined, error: "Failed to fetch exchange rates" });
     }
   },
+  setAmount: (amount: number) => set({ amount }),
+  setAmountType: (amountType: string) => set({ amountType }),
 }));

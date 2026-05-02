@@ -1,10 +1,6 @@
 import { type FC } from "react";
-import type { UahResponse } from "../../interface/data";
 import { uahConvert } from "../../utils/convert";
-
-interface HeaderProps {
-  date: UahResponse | null;
-}
+import type { HeaderProps } from "../../interface/header";
 
 export const Header: FC<HeaderProps> = ({ date }) => {
   return (

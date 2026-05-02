@@ -7,6 +7,8 @@ import type { MoneyValue } from "../../const/moneyOptions";
 
 export const ExchangeForm: FC = () => {
   const uahData = useExchangeStore((state) => state.item);
+  const setAmountValue = useExchangeStore((state) => state.setAmount);
+  const setAmountType = useExchangeStore((state) => state.setAmountType);
 
   const [fromAmountType, setFromAmountType] = useState<MoneyValue>("uah");
   const [toAmountType, setToAmountType] = useState<MoneyValue>("usd");
@@ -33,6 +35,9 @@ export const ExchangeForm: FC = () => {
           convert(amount, fromAmountType, toAmountType, rates),
         );
 
+  setAmountValue(toValue);
+  setAmountType(toAmountType);
+
   const changeFromAmountHandler = (value: number) => {
     setActiveField("from");
     setAmount(value);
@@ -44,18 +49,20 @@ export const ExchangeForm: FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-64 gap-5">
+    <div className="flex flex-col w-64 gap-3">
       <MoneyInput
         defaultValue={fromAmountType}
         value={fromValue}
         onChange={changeFromAmountHandler}
         onAmountTypeChange={setFromAmountType}
+        lable="You change"
       />
       <MoneyInput
         defaultValue={toAmountType}
         value={toValue}
         onChange={changeToAmountHandler}
         onAmountTypeChange={setToAmountType}
+        lable="You receive"
       />
     </div>
   );
